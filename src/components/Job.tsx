@@ -1,14 +1,17 @@
-import React from 'react';
-import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector, RootStateOrAny } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { FaCalendarAlt, FaMapMarkerAlt, FaTools, FaRegUserCircle } from 'react-icons/fa';
-
 import { formatPhoneNumber, formatAmount, formatDate, formatNumber } from 'utils';
+import { acceptJob, rejectJob } from 'Api';
 import './Job.scss';
+import LinkToDashboad from './LinkToDashboad';
 
-const Job = ({ match }: any) => {
-  const jobId = match.params.id;
-  const dispatch = useDispatch();
-  console.log(dispatch);
+const Job = () => {
+  const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { jobId } = useParams();
+
   const jobs = useSelector((state: RootStateOrAny) => {
     const jobs = state.jobs;
     return Object.keys(jobs)
@@ -16,8 +19,41 @@ const Job = ({ match }: any) => {
       .filter((job) => job.jobId === jobId);
   });
 
+  const handleClickReject = () => {
+    rejectJob()
+      .then((result) => {
+        if (result.success) {
+          setSuccess(true);
+        } else {
+          setError(true);
+        }
+      })
+      .catch(() => setError(true));
+  };
+  const handleClickAccept = () => {
+    acceptJob()
+      .then((result) => {
+        if (result.success) {
+          setSuccess(true);
+        } else {
+          setError(true);
+        }
+      })
+      .catch(() => setError(true));
+  };
+
   return (
     <div className="job bg-light d-flex container flex-column pt-3 pb-3">
+      {error && (
+        <div className="bg-danger text-white p-4 mb-4">
+          Please try again or <LinkToDashboad />
+        </div>
+      )}
+      {success && (
+        <div className="bg-primary text-white p-4 mb-4">
+          Action accepeted. Pick a new job <LinkToDashboad />
+        </div>
+      )}
       {jobs.map((job) => (
         <div className="bg-white" key={job.jobId}>
           <img src={job.jobTitle.imageUrl} alt={`${job.jobTitle.name}`} />
@@ -84,8 +120,12 @@ const Job = ({ match }: any) => {
             </li>
           </ul>
           <div className="p-3 d-flex justify-content-around">
-            <button className="btn btn-outline-secondary">No Thanks</button>
-            <button className="btn btn-primary">I'll Take it</button>
+            <button className="btn btn-outline-secondary" onClick={handleClickReject}>
+              No Thanks
+            </button>
+            <button className="btn btn-primary" onClick={handleClickAccept}>
+              I'll Take it
+            </button>
           </div>
         </div>
       ))}

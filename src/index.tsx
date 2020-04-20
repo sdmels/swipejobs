@@ -11,8 +11,6 @@ import middleware from 'middleware';
 
 const store = createStore(reducer, middleware);
 
-console.log(store.getState());
-
 ReactDOM.render(
   <Provider store={store}>
     <App />

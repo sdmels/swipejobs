@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+
 import Card from './Card';
 
 const Dashboard = () => {
@@ -7,7 +8,7 @@ const Dashboard = () => {
     const { jobs } = state;
     return Object.keys(jobs).map((key) => jobs[key]);
   });
-  console.log(jobs);
+
   return (
     <div className="dashboard container">
       <div className="row pt-3">

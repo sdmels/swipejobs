@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+
 import './Card.scss';
 
 interface Props {
@@ -10,14 +12,24 @@ interface Props {
 }
 
 const Card = (props: Props) => {
+  const history = useHistory();
+
+  const { title, imageUrl, info, id, address } = props;
+
+  const handleClick = () => {
+    history.push(`/job/${id}`);
+  };
+
   return (
     <div className="card" style={{ width: '18rem' }}>
-      <img className="card-img-top" src={props.imageUrl} alt={`Card image for ${props.id}`} />
+      <img className="card-img-top" src={imageUrl} alt={`job type for ${title}`} />
       <div className="card-body">
-        <h5 className="card-title">{props.title}</h5>
-        <p className="card-text">{props.info}</p>
-        <p className="card-text">{props.address}</p>
-        <button className="btn btn-primary">More info</button>
+        <h5 className="card-title">{title}</h5>
+        <p className="card-text">{info}</p>
+        <p className="card-text">{address}</p>
+        <button className="btn btn-primary" onClick={handleClick}>
+          More info
+        </button>
       </div>
     </div>
   );
