@@ -5,7 +5,7 @@ import { FaCalendarAlt, FaMapMarkerAlt, FaTools, FaRegUserCircle } from 'react-i
 import { formatPhoneNumber, formatAmount, formatDate, formatNumber } from 'utils';
 import { acceptJob, rejectJob } from 'Api';
 import './Job.scss';
-import LinkToDashboad from './LinkToDashboad';
+import LinkToDashboad from '../LinkToDashboad';
 
 const Job = () => {
   const [error, setError] = useState(false);

@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './Header';
-import Dashboard from './Dashboard';
-import Job from './Job';
+import Header from './Header/Header';
+import Dashboard from './Dashboard/Dashboard';
+import Job from './Job/Job';
 import NoMatch from './NoMatch';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 

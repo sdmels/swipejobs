@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import Card from './Card';
+import Card from '../Card/Card';
 
 const Dashboard = () => {
   const jobs = useSelector((state: any) => {
