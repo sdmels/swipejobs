@@ -11,9 +11,9 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard container">
-      <div className="row pt-3">
+      <div className="d-flex flex-wrap">
         {jobs.map((job) => (
-          <div className="col-md-6 mb-3" key={job.jobId}>
+          <div className="m-3 align-self-stretch d-flex" key={job.jobId}>
             <Card
               title={job.jobTitle.name}
               id={job.jobId}
