@@ -1,0 +1,18 @@
+.header {
+  height: 80px;
+  width: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  img {
+    width: 180px;
+  }
+
+  .user-profile {
+    color: #fff;
+  }
+  //   @media (mix-width: $screen-sm-min) {
+  //   }
+}
