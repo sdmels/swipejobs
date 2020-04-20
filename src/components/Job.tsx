@@ -1,13 +1,14 @@
 import React from 'react';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
-
 import { FaCalendarAlt, FaMapMarkerAlt, FaTools, FaRegUserCircle } from 'react-icons/fa';
 
+import { formatPhoneNumber, formatAmount, formatDate, formatNumber } from 'utils';
 import './Job.scss';
 
 const Job = ({ match }: any) => {
   const jobId = match.params.id;
   const dispatch = useDispatch();
+  console.log(dispatch);
   const jobs = useSelector((state: RootStateOrAny) => {
     const jobs = state.jobs;
     return Object.keys(jobs)
@@ -27,13 +28,13 @@ const Job = ({ match }: any) => {
           <div className="bg-secondary d-flex mt-3">
             <div className="col-md-6 pt-2 pb-2">
               <small className="text-light">Distance</small>
-              <p className="h5 text-white">{Number(job.milesToTravel).toFixed(1)} miles</p>
+              <p className="h5 text-white">{formatNumber(job.milesToTravel, 1)} miles</p>
             </div>
             <div className="col-md-6 text-right  pt-2 pb-2">
               <small className="text-light">Hourly Rate</small>
               <p className="h5 text-white">
                 <sup>$</sup>
-                {Number(job.wagePerHourInCents / 100).toFixed(2)}
+                {formatAmount(job.wagePerHourInCents / 100)}
               </p>
             </div>
           </div>
@@ -42,12 +43,11 @@ const Job = ({ match }: any) => {
               <FaCalendarAlt size="1.75rem" />
               <div className="job__details-info">
                 <h5>Shift Dates</h5>
-                {job.shifts.map((shift: any) => (
-                  <div key={shift.startDate}>
-                    <p>{shift.startDate}</p>
-                    <p>{shift.endDate}</p>
-                  </div>
-                ))}
+                <ul className="sub-listing ">
+                  {job.shifts.map((shift: any) => (
+                    <li key={shift.startDate}>{formatDate(shift)}</li>
+                  ))}
+                </ul>
               </div>
             </li>
             <li className="border-bottom">
@@ -55,7 +55,7 @@ const Job = ({ match }: any) => {
               <div className="job__details-info">
                 <h5>Location</h5>
                 <p className="mb-0">{job.company.address.formattedAddress}</p>
-                <small>{job.milesToTravel} miles from your search location</small>
+                <small>{formatNumber(job.milesToTravel, 1)} miles from your search location</small>
               </div>
             </li>
             {job.requirements && (
@@ -63,9 +63,13 @@ const Job = ({ match }: any) => {
                 <FaTools size="1.75rem" />
                 <div className="job__details-info">
                   <h5>Requirement</h5>
-                  {job.requirements.map((req: any) => (
-                    <p>{req}</p>
-                  ))}
+                  <ul className="sub-listing">
+                    {job.requirements.map((req: any, index: number) => (
+                      <li className=" list-type" key={index}>
+                        {req}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </li>
             )}
@@ -74,7 +78,7 @@ const Job = ({ match }: any) => {
               <div className="job__details-info">
                 <h5>Report to</h5>
                 <p>
-                  {job.company.reportTo.name}({job.branchPhoneNumber})
+                  {job.company.reportTo.name} {formatPhoneNumber(job.branchPhoneNumber)}
                 </p>
               </div>
             </li>
