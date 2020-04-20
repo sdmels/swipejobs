@@ -1,15 +1,16 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 import Header from './Header/Header';
 import Dashboard from './Dashboard/Dashboard';
 import Job from './Job/Job';
 import NoMatch from './NoMatch';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const Layout = () => {
   return (
     <>
-      <Header />
       <Router>
+        <Header />
         <Switch>
           <Route path="/" exact component={Dashboard} />
           <Route path="/job/:jobId" exact component={Job} />

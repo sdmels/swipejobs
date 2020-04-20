@@ -1,6 +1,12 @@
 import { RECEIVE_JOBS } from '../actions/jobs';
+import { Jobs } from 'models/Jobs';
 
-const jobs = (state = {}, action: any) => {
+export interface JobAction {
+  type: typeof RECEIVE_JOBS;
+  jobs: Jobs;
+}
+
+const jobs = (state = {}, action: JobAction) => {
   switch (action.type) {
     case RECEIVE_JOBS:
       return {
